@@ -1,0 +1,123 @@
+{% extends 'Navbar/ProjectNavbar.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Invitation</title>
+    {% block body %}
+    <style>
+        /* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container styling */
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin-left:35rem;
+
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Form fields styling */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.checkbox-list label {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Submit button styling */
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Success message styling */
+.success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Add padding between checkboxes */
+.checkbox-list {
+    padding-left: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+    <h1>Send Invitation to Students</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" required><br><br>
+
+        <label for="message">Message:</label><br>
+        <textarea name="message" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="students">Select Students:</label><br>
+        {% for student in students %}
+            <input type="checkbox" name="students" value="{{ student.id }}">{{ student.name }} ({{ student.register_number }})<br>
+        {% endfor %}
+
+        <button type="submit">Send Emails</button>
+    </form>
+{% endblock %}
+</body>
+</html>
